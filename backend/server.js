@@ -3,6 +3,7 @@ import { v2 as cloudinary } from "cloudinary";
 
 import authRoutes from "./routes/auth.routes.js";
 import userRoutes from "./routes/user.routes.js";
+import postRoutes from "./routes/post.routes.js";
 
 import dotenv from "dotenv";
 
@@ -23,8 +24,10 @@ const PORT = process.env.PORT || 5000;
 app.use(express.json()); // parse json data in the body of the request
 app.use(express.urlencoded({ extended: true })); // parse url encoded data in the body of the request
 app.use(cookieParser());
+
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/posts", postRoutes);
 
 app.listen(PORT, () => {
   console.log(`server started on http://localhost:${PORT}`);
