@@ -1,9 +1,9 @@
 import express from "express";
 import { protectRoute } from "../middleware/protectRoute.js";
-import { getUserProfile } from "../controllers/userController.js";
-import { followUnfollowUser } from "../controllers/userController.js";
-import { getSuggestedUsers } from "../controllers/userController.js";
-import { updateUserProfile } from "../controllers/userController.js";
+import { getUserProfile } from "../controllers/user.controller.js";
+import { followUnfollowUser } from "../controllers/user.controller.js";
+import { getSuggestedUsers } from "../controllers/user.controller.js";
+import { updateUserProfile } from "../controllers/user.controller.js";
 
 const router = express.Router();
 
