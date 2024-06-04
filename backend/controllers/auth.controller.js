@@ -7,23 +7,23 @@ export const signup = async (req, res) => {
     const { fullname, username, email, password } = req.body;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      return res.status(400).json({ message: "Invalid email format" });
+      return res.status(400).json({ error: "Invalid email format" });
     }
 
     const existingUser = await User.findOne({ username });
     if (existingUser) {
-      return res.status(400).json({ message: "User already exists" });
+      return res.status(400).json({ error: "User already exists" });
     }
 
     const existingEmail = await User.findOne({ email });
     if (existingEmail) {
-      return res.status(400).json({ message: "Email already exists" });
+      return res.status(400).json({ error: "Email already exists" });
     }
 
     if (password.length < 6)
       return res
         .status(400)
-        .json({ message: "Password must be at least 6 characters" });
+        .json({ error: "Password must be at least 6 characters" });
 
     // hash the password
     const salt = await bcrypt.genSalt(10);
@@ -49,11 +49,11 @@ export const signup = async (req, res) => {
         coverImg: newUser.coverImg,
       });
     } else {
-      res.status(400).json({ message: "Invalid user data" });
+      res.status(400).json({ error: "Invalid user data" });
     }
   } catch (error) {
     console.log("error in signup", error.message);
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ error: error.message });
   }
 };
 
@@ -66,7 +66,7 @@ export const login = async (req, res) => {
       user?.password || ""
     );
     if (!isPasswordCorrect || !user) {
-      return res.status(400).json({ message: "Invalid credentials" });
+      return res.status(400).json({ error: "Invalid credentials" });
     }
     generateAccessToken(user._id, res);
 
@@ -82,7 +82,7 @@ export const login = async (req, res) => {
     });
   } catch (error) {
     console.log("error in login", error.message);
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ error: error.message });
   }
 };
 
@@ -92,7 +92,7 @@ export const logout = async (req, res) => {
     res.status(200).json({ message: "Logged out successfully" });
   } catch (error) {
     console.log("error in logout", error.message);
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ error: error.message });
   }
 };
 
@@ -102,6 +102,6 @@ export const getMe = async (req, res) => {
     res.status(200).json(user);
   } catch (error) {
     console.log("error in getMe", error.message);
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ error: error.message });
   }
 };
